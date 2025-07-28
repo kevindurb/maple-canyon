@@ -1,0 +1,45 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  build:
+    desc: Build STL from main OpenSCAD file
+    cmds:
+      - mkdir -p dist
+      - openscad -o dist/output.stl main.scad
+    generates:
+      - dist/output.stl
+
+  preview:
+    desc: Open main file in OpenSCAD GUI for preview
+    cmds:
+      - openscad main.scad
+
+  check:
+    desc: Check syntax without generating output
+    cmds:
+      - openscad --check-syntax main.scad
+
+  render:
+    desc: Render high-quality STL (slower)
+    cmds:
+      - mkdir -p dist
+      - openscad --render -o dist/output.stl main.scad
+
+  clean:
+    desc: Remove generated files
+    cmds:
+      - rm -rf dist/
+
+  png:
+    desc: Export PNG preview image
+    cmds:
+      - mkdir -p dist
+      - openscad --export-format=png -o dist/preview.png main.scad
+
+  info:
+    desc: Show OpenSCAD version and capabilities
+    cmds:
+      - openscad --version
+      - openscad --info
